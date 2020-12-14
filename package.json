@@ -3,22 +3,38 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve ",
+    "xlsx": "node ./ci_script/xlsx-chart-serve.js",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "dev": " concurrently \"npm run serve\" \"npm run xlsx\""
   },
   "dependencies": {
+    "axios": "^0.21.0",
+    "concurrently": "^5.3.0",
     "core-js": "^3.6.5",
+    "file-saver": "^2.0.5",
+    "jquery": "^3.5.1",
     "vue": "^2.6.11"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
+    "async": "^1.4.2",
     "babel-eslint": "^10.1.0",
+    "backbone": "^1.2.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
-    "vue-template-compiler": "^2.6.11"
+    "express": "^4.17.1",
+    "jszip": "^2.5.0",
+    "multer": "^1.4.2",
+    "underscore": "^1.8.3",
+    "verror": "^1.6.0",
+    "vue-template-compiler": "^2.6.11",
+    "xml2js": "^0.4.13"
   },
   "eslintConfig": {
     "root": true,
