@@ -24,16 +24,18 @@ export default {
 
       let xlsxChart = new XLSXChart();
       let opts = {
-        chart: "bar",
+        chart: "column",
         titles: ["Price"],
-        fields: ["Apple", "Blackberry", "Strawberry", "Cowberry", "jasonchen"],
+        fields: ["Apple", "Blackberry", "Strawberry", "Cowberry", "jasonchen", 'lemon', 'orange'],
         data: {
           Price: {
-            Apple: 10,
-            Blackberry: 5,
-            Strawberry: 15,
-            Cowberry: 20,
-            jasonchen: 2000
+            Apple: 100,
+            Blackberry: 250,
+            Strawberry: 150,
+            Cowberry: 120,
+            jasonchen: 240,
+            lemon: 130,
+            orange: 90
           },
         },
         chartTitle: "Area chart",
