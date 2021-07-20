@@ -11,8 +11,10 @@ xslx-chart插件，由于xslx-chart是一个node环境下的一个插件所以�
 ## 3.开始使用:
 
 **方法一**:基于node环境使用xslx-chart工具;
-注意:由于xslx-chart是在nodejs环境下运行的,所以我们要在项目本地跑一个node服务来使用xslx-cahrt,
+注意:
+	由于xslx-chart是在nodejs环境下运行的,所以我们要在项目本地跑一个node服务来使用xslx-cahrt,
 **思路:**
+
 1.我们在运行项目的同时,在本地跑一个nodejs服务(xlsx-chart-serve),在该nodejs服务中处理表格的操作,处理完之后再将文件发送到前端,前端再进行文件下载;
 
 如图:我们跑项目时直接执行
@@ -21,16 +23,23 @@ xslx-chart插件，由于xslx-chart是一个node环境下的一个插件所以�
 npm run dev
 ```
 就会同时执行serve和xlsx;xlsx作用就是将导出表格的服务跑起来;
+
 **注意:**
+
 同时执行多个指令需要**concurrently**这个工具,使用 && 连接两个指令是串行的,会中断执行命令
+
 2.我们服务跑起来之后,前端需要导出表格时,将数据发送给nodejs服务,交由xlsx这个服务处理,处理完之后将文件发给前端
+
 **注意:**
 	由于node服务和我们项目自身的端口不一致,所以会导致跨域的问题,这个需要注意
 
-**方法二(推荐)**:基于xlsx-chart进行二次开发,直接在前端中使用
+**方法二(推荐)**:
+	基于xlsx-chart进行二次开发,直接在前端中使用
+
 **思路:**
  	我们看xlsx-chart工具的源码不难发现,它生成的图表是在本地读取模板文件然后再拿最新的数据去替换模板表格中的数据生成的新表格和新图表,它在node环境中使用的是fs工具读取文件,那我们可以在前端使用axios请求本地文件,只要读取文件内容和类型一致就可以了
- 	**重点:** axios请求中响应数据类型需要配置;**将responseType设置为'arraybuffer'**
+	
+ **重点:** axios请求中响应数据类型需要配置;**将responseType设置为'arraybuffer'**
  	
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201222093014191.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTA4NTgyMg==,size_16,color_FFFFFF,t_70)
 然后生成的最新文件使用file-saver下载下来即可
@@ -525,9 +534,11 @@ module.exports = Chart;
 
 **注意事项:**
 由于我们发送axios请求修改了responseType:'arraybuffer',所以我们需要保证此项配置成功,如果项目中使用了mock并引用了就要注意了,因为mock会将全局的axios的responseType设置为 ' ';导致我们发请求无法获取excel的模板文件内容,所以我们需要保证项目中没有使用mock
+
 第二步:准备模板文件
 我们将所有的模板文件都放到项目中的public目录下即可通过axios直接请求到了(模板文件可以在先安装xlsx-chart,然后在node_modules中里面拿出来,然后把xlsx-chart卸载掉)	;模板我们只需要基础的即可(columnAvg.xlsx,columnGroup.xlsx,columnGroupAvg.xlsx用不上)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201222093121863.png)
+
 
 第三步:在vue中使用
 xxx.vue文件
@@ -596,23 +607,33 @@ export default {
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201222093318579.gif#pic_center)
 
 第五步: 进阶使用:
-思路:我们使用过后不难了解到,xlsx-chart这个工具的实现思路就是在需要导出excel时,通过读取本地的excel模板文件,然后使用我们想要展示的数据去替换模板中表格的数据,最终达到图表生成的效果;但是我们能不能在已有模板的基础上多加几个图表呢,答案是可以的而且非常简单
+思路:
+
+我们使用过后不难了解到,xlsx-chart这个工具的实现思路就是在需要导出excel时,通过读取本地的excel模板文件,然后使用我们想要展示的数据去替换模板中表格的数据,最终达到图表生成的效果;但是我们能不能在已有模板的基础上多加几个图表呢,答案是可以的而且非常简单
+
 1.我们打开其中一个模板文件column.xlsx;选中我们想要生成图表的列(第一列必选),注意要选中全列
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201222093330685.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTA4NTgyMg==,size_16,color_FFFFFF,t_70)
+
 
 2.生成图表
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201222093340690.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTA4NTgyMg==,size_16,color_FFFFFF,t_70)
 
+
 3.重复上述操作生成多个图表后,把这些生成的图表剪切到Chart的sheet中,并保存
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201222093414504.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTA4NTgyMg==,size_16,color_FFFFFF,t_70)
+
 
 4.再次导出表格(使用保存后的模板)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201222093430105.gif#pic_center)
 
 **写在最后:**
+
 1.以上就是基于xlsx-chart开发excel导出表格数据带图表的功能,及简单的拓展,如果你有更好的思路可以直接修改base.js的源码和修改excel模板的图表样式甚至往模板中新增excel相关的更多功能等等;
+
 2.文档中的项目链接:https://github.com/Jason-chen-coder/exportExcelForChart
+
 3.xlsx-chart非常强大,我只是基于他base的源码修改了一下,大佬们可以修改他完整版的源码来开发更多的功能
+
 # vue-xlsx-chart-demo
 
 ## Project setup
