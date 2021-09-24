@@ -3,7 +3,9 @@ const resolve = (dir) => {
   return path.join(__dirname, dir);
 };
 module.exports = {
-  publicPath: './',
+   publicPath: process.env.NODE_ENV === 'production'
+    ? '/Xlsx-EasyExportExcelWithChars/'
+    : '/',
   lintOnSave: false,
   productionSourceMap: false,
   configureWebpack: {
